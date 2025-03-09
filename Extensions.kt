@@ -1,0 +1,1 @@
+fun String.toStringBuilder(): StringBuilder = StringBuilder(this)
