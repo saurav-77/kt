@@ -16,3 +16,7 @@ fun IntArray.toLongArray(): LongArray {
     }
     return res;
 }
+
+fun Int.toStringBuilder(): StringBuilder = StringBuilder(this.toString())
+
+fun Long.toStringBuilder(): StringBuilder = StringBuilder(this.toString())
