@@ -1,6 +1,4 @@
-import java.util.function.BinaryOperator
-
-class SegTree(val MAX: Int, val op: BinaryOperator<Long>, val E: Long) {
+class SegTree(val MAX: Int, val op: (a: Long, b: Long) -> Long, val E: Long) {
     val N: Int
     var seg: Array<Long>
 
@@ -13,7 +11,8 @@ class SegTree(val MAX: Int, val op: BinaryOperator<Long>, val E: Long) {
         seg = Array<Long>(N * 2) { E }
 
     }
-    constructor(dat: Array<kotlin.Long>, op: BinaryOperator<kotlin.Long>, e: kotlin.Long) : this(dat.size, op, e) {
+
+    constructor(dat: Array<kotlin.Long>, op: (a: Long, b: Long) -> Long, e: kotlin.Long) : this(dat.size, op, e) {
         build(dat)
     }
 
@@ -21,38 +20,39 @@ class SegTree(val MAX: Int, val op: BinaryOperator<Long>, val E: Long) {
         val l = dat.size
         System.arraycopy(dat, 0, seg, N, l)
         for (i in N - 1 downTo 1) {
-            seg[i] = op.apply(seg[i shl 1 or 0], seg[i shl 1 or 1])
+            seg[i] = op(seg[i shl 1 or 0], seg[i shl 1 or 1])
         }
     }
 
-    fun add(P: Int, x: Long) {
-        var p = P + N;
-        exclusiveRangeCheck(P)
-        seg[p] += x
+    fun add(ind: Int, value: Long) {
+        var p = ind + N;
+        exclusiveRangeCheck(ind)
+        seg[p] += value
         p = p shr 1
         while (p > 0) {
-            seg[p] = op.apply(seg[p shl 1 or 0], seg[p shl 1 or 1])
+            seg[p] = op(seg[p shl 1 or 0], seg[p shl 1 or 1])
             p = p shr 1
         }
     }
 
-    fun set(P: Int, x: Long) {
-        var p = P + N;
-        exclusiveRangeCheck(P)
-        seg[p] = x
+    operator fun set(ind: Int, value: Long) {
+        var p = ind + N;
+        exclusiveRangeCheck(ind)
+        seg[p] = value
         p = p shr 1
         while (p > 0) {
-            seg[p] = op.apply(seg[p shl 1 or 0], seg[p shl 1 or 1])
+            seg[p] = op(seg[p shl 1 or 0], seg[p shl 1 or 1])
             p = p shr 1
         }
     }
 
-    fun get(p: Int): Long {
+    operator fun get(p: Int): Long {
         exclusiveRangeCheck(p)
         return seg[p + N]
     }
 
-    fun prod(l: Int, r: Int): Long {
+    //[l, r)
+    fun query(l: Int, r: Int): Long {
         var l = l
         var r = r
         require(l <= r) { String.format("Invalid range: [%d, %d)", l, r) }
@@ -63,12 +63,12 @@ class SegTree(val MAX: Int, val op: BinaryOperator<Long>, val E: Long) {
         l += N
         r += N
         while (l < r) {
-            if ((l and 1) == 1) sumLeft = op.apply(sumLeft, seg[l++])
-            if ((r and 1) == 1) sumRight = op.apply(seg[--r], sumRight)
+            if ((l and 1) == 1) sumLeft = op(sumLeft, seg[l++])
+            if ((r and 1) == 1) sumRight = op(seg[--r], sumRight)
             l = l shr 1
             r = r shr 1
         }
-        return op.apply(sumLeft, sumRight)
+        return op(sumLeft, sumRight)
     }
 
 
