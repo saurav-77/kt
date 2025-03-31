@@ -1,3 +1,5 @@
+package saurav
+
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
@@ -21,9 +23,9 @@ fun nextDouble(): Double {
 }
 
 
-fun nextLongArray(len: Int): Array<Long> {
-    val ans = Array<Long>(len) { 0L }
-    for (i in 0..<len) {
+fun nextLongArray(len: Long): Array<Long> {
+    val ans = Array<Long>(len.toInt()) { 0L }
+    for (i in ans.indices) {
         ans[i] = nextLong()
     }
     return ans

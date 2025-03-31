@@ -1,3 +1,5 @@
+package saurav
+
 class SegTree(val MAX: Int, val op: (a: Long, b: Long) -> Long, val E: Long) {
     val N: Int
     var seg: Array<Long>
