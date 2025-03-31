@@ -12,27 +12,17 @@ fun nextString(): String {
     return st!!.nextToken()
 }
 
-fun nextInt(): Int {
-    return nextString().toInt()
-}
-
 fun nextLong(): Long {
     return nextString().toLong()
 }
+
 fun nextDouble(): Double {
     return nextString().toDouble()
 }
 
-fun nextIntArray(len: Int): IntArray {
-    val ans = IntArray(len)
-    for (i in 0..<len) {
-        ans[i] = nextInt()
-    }
-    return ans
-}
 
-fun nextLongArray(len: Int): LongArray {
-    val ans = LongArray(len)
+fun nextLongArray(len: Int): Array<Long> {
+    val ans = Array<Long>(len) { 0L }
     for (i in 0..<len) {
         ans[i] = nextLong()
     }
