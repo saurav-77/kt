@@ -1,5 +1,8 @@
 package saurav
 
+import java.util.*
+import java.util.stream.Stream
+
 fun String.toStringBuilder(): StringBuilder = StringBuilder(this)
 
 fun Long.toStringBuilder(): StringBuilder = StringBuilder(this.toString())
@@ -22,11 +25,11 @@ fun IntArray.toLongArray(): Array<Long> {
     return res
 }
 
-fun Array<Long>.lowerBound(num: Long): Int {
+fun Array<Long>.lowerBound(num: Long, low: Int = 0, high: Int = this.size - 1): Int {
     assert(this.isNotEmpty())
     var ans = this.size;
-    var lo = 0;
-    var hi = this.size - 1;
+    var lo = low;
+    var hi = high
     while (lo <= hi) {
         val mid = lo + (hi - lo) / 2;
         if (this[mid] >= num) {
@@ -39,11 +42,11 @@ fun Array<Long>.lowerBound(num: Long): Int {
     return ans;
 }
 
-fun Array<Long>.upperBound(num: Long): Int {
+fun Array<Long>.upperBound(num: Long, low: Int = 0, high: Int = this.size - 1): Int {
     assert(this.isNotEmpty())
     var ans = this.size;
-    var lo = 0;
-    var hi = this.size - 1;
+    var lo = low;
+    var hi = high;
     while (lo <= hi) {
         val mid = lo + (hi - lo) / 2;
         if (this[mid] > num) {
@@ -54,4 +57,8 @@ fun Array<Long>.upperBound(num: Long): Int {
         }
     }
     return ans;
+}
+
+fun Array<Long>.stream(): Stream<Long> {
+    return Arrays.stream(this)
 }

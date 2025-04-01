@@ -14,6 +14,10 @@ fun nextString(): String {
     return st!!.nextToken()
 }
 
+fun nextInt(): Int {
+    return nextString().toInt()
+}
+
 fun nextLong(): Long {
     return nextString().toLong()
 }
